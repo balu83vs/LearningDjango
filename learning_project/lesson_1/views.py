@@ -21,6 +21,6 @@ def contactpage(request):
     if request.method == 'GET':
         return render(request, template_name='contact.html', context={'page': 'contact'})
     else:
-        with open("D:\py_learning\learning_django\django_stepik\stepik_django_test_1\mainapp\message_result.txt", "a") as message_file:
+        with open("D:\py_learning\learning_django\learning_project\lesson_1\message_result.txt", "a") as message_file:
             message_file.writelines(f'{request.POST["name"]}, {request.POST["email"]}, {request.POST["subject"]}, {request.POST["message"]}\n')
         return redirect(contactpage)
