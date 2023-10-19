@@ -1,4 +1,5 @@
 from django.db import models
+from datetime import datetime
 
 # Create your models here.
 class Articles(models.Model):
@@ -9,10 +10,20 @@ class Articles(models.Model):
     Categories = models.CharField(max_length=50)
     Date = models.DateField()
 
+    def new_comment(self, data):
+        comment = Comments()
+        comment.Author = data['name']
+        comment.Email = data['email']
+        comment.Message = data['message']
+        comment.Article = self
+        comment.Date = datetime.now().date()
+        comment.save()
+
+
 class Comments(models.Model):
     Author = models.CharField(max_length=50)
     Email = models.EmailField()
     Message = models.TextField()
     Article = models.ForeignKey(Articles, on_delete=models.CASCADE)
-
+    Date = models.DateField(default='2023-01-01')
 
