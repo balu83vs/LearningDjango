@@ -1,0 +1,25 @@
+<div>
+    <form method="POST" action="">                        
+        <div>
+            <label for="username">username</label>
+            <div>
+                <input name="username" id="username" type="text" required>                            
+            </div>
+        </div>
+        <div>
+            <label for="password">password</label>
+            <div>
+                <input name="password" id="password" type="text" required>                            
+            </div>
+        </div>
+
+        {% csrf_token %}
+
+        <div>
+            <div>
+                <button type = 'sybmit'>Submit</button>                        
+            </div>                            
+        </div>                                
+    </form>
+    <p><a href="{% url 'reg' %}"><b>Регистрация</b></a></p>
+</div>
