@@ -1,0 +1,18 @@
+<div>
+    <form method="POST" action="">                        
+        <div>
+            <label for="note-text">note-text</label>
+            <div>
+                <input type="text" value="Заметка пользователя" name="note-text" />                           
+            </div>
+        </div>
+
+        {% csrf_token %}
+
+        <div>
+            <div>
+                <button type = 'sybmit'>Submit</button>                        
+            </div>                            
+        </div>                                
+    </form>
+</div>
