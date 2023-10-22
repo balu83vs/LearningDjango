@@ -1,0 +1,5 @@
+{% block content %}
+    {% for note in notes %}
+    <p class="my-note">{{ note.note_text }}</p>
+    {% endfor %}
+{% endblock %}
