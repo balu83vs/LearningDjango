@@ -47,7 +47,7 @@ def login_page(request):
 
 def notespage(request):
     try:
-        notes = Notes.objects.filter(user_name_id=request.user)
+        notes = Notes.objects.filter(username_id=request.user)
         return render(request, template_name='notes.html', context={'notes': notes})
     except TypeError:
         return redirect('/login/')

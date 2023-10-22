@@ -20,9 +20,9 @@ class NoteUsers(AbstractUser):
       
 class Notes(models.Model):
     note_text = models.TextField()  
-    user_name = models.ForeignKey(NoteUsers, on_delete=models.CASCADE)
+    username = models.ForeignKey(NoteUsers, on_delete=models.CASCADE)
 
     def new_note(self, data, curent_user):
         self.note_text = data  
-        self.user_name = curent_user
+        self.username = curent_user
         self.save()
