@@ -1,4 +1,4 @@
-<div>
+<!--<div>
     <form method="POST" action="">                        
         <div>
             <label for="username">username</label>
@@ -45,4 +45,13 @@
             </div>                            
         </div>                                
     </form>
-</div>
+</div>-->
+
+<form method="POST">
+    {% csrf_token %}
+    {{ reg_form.as_p }}
+    <button type="submit">Submit</button>
+</form>
+
+
+                                        
