@@ -1,5 +1,9 @@
 {% block content %}
-    {% for note in notes %}
-    <p class="my-note">{{ note.note_text }}</p>
-    {% endfor %}
+    {% if notes %}
+        {% for note in notes %}
+            <p class="my-note">{{ note.note_text }}</p>
+        {% endfor %}
+    {% else %}
+        <p class="my-note">Список заметок пуст</p>
+    {% endif %}
 {% endblock %}

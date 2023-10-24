@@ -1,40 +1,19 @@
-from django.shortcuts import render, HttpResponse, redirect, HttpResponseRedirect
+from django.shortcuts import render, redirect, HttpResponse
 from .models import Notes, NoteUsers
-from .forms import UserRegForm
+from .forms import UserRegForm, UserLogForm
 
 from django.contrib.auth import authenticate, login, logout
 
 # Create your views here.  
 USERS = NoteUsers.objects.all()
 
-"""
-def add_user(request):
-    if request.method == "GET":
-        return render(request, "reg.html")
-    else:
-        data = request.POST
-        if data['username'] is None:
-            return HttpResponse("<h3>Введите логин пользователя</h3>")
-        elif data['first_name'] is None:
-            return HttpResponse("<h3>Введите имя пользователя</h3>")
-        elif data['last_name'] is None:
-            return HttpResponse("<h3>Введите фамилию пользователя</h3>")
-        elif data['password1'] is None or data['password2'] is None:
-            return HttpResponse("<h3>Введите пароль</h3>")
-        elif data['password1'] != data['password2']:
-            return HttpResponse("<h3>Пароли должны совпадать</h3>")
-        else:
-            newuser = NoteUsers()
-            newuser.create_user(data)
-            return HttpResponse("<h3>Вы успешно зарегистрировались</h3>")
-"""
 
 def add_user(request):
     if request.method == 'POST':
         reg_form = UserRegForm(request.POST)
         if reg_form.is_valid():
             reg_form.save()
-            return HttpResponse("<h3>Вы успешно зарегистрировались</h3>")
+            return redirect('/login/')
             # обработка успешного сохранения
     else:
         reg_form = UserRegForm()
@@ -42,22 +21,21 @@ def add_user(request):
 
 
 def login_page(request):
-    if request.user in USERS:
-        return HttpResponseRedirect('/logout/')
+    if request.method == 'POST':
+        log_form = UserLogForm(request.POST)
+        if log_form.is_valid():
+            user = log_form.cleaned_data['username']
+            password = log_form.cleaned_data['password']
+            curent_user = authenticate(request, username=user, password=password)
+            if curent_user is not None:
+                login(request, curent_user)    
+                return redirect('/notes/')
+            else:
+                return redirect('/reg/')
     else:
-        if request.method == "GET":
-            return render(request, "login.html")
-        else:
-            data = request.POST
-            try:
-                user = authenticate(request, username=data['username'], password=data['password'])
-                print(data)
-                if user is None:
-                    return HttpResponse("<h3>Пользователь с таким логином и паролем не найден</h3>")
-                login(request, user)
-                return HttpResponse("<h3>Вы успешно авторизованы</h3>")
-            except KeyError:
-                return HttpResponse("<h3>Заполните все поля</h3>")    
+        log_form = UserLogForm()
+    return render(request, 'login.html', {'log_form': log_form})  
+
 
 
 def notespage(request):
@@ -86,7 +64,7 @@ def add_notepage(request):
 
 def logoutpage(request):
     logout(request)
-    return HttpResponseRedirect('/login/')            
+    return redirect('/login/')            
               
 
         

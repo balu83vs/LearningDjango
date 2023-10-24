@@ -1,25 +1,14 @@
-<div>
-    <form method="POST" action="">                        
-        <div>
-            <label for="username">username</label>
-            <div>
-                <input name="username" id="username" type="text" required>                            
-            </div>
-        </div>
-        <div>
-            <label for="password">password</label>
-            <div>
-                <input name="password" id="password" type="text" required>                            
-            </div>
-        </div>
-
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+</head>
+<body>
+    <h1>Login</h1>
+    <form method="POST">
         {% csrf_token %}
-
-        <div>
-            <div>
-                <button type = 'sybmit'>Submit</button>                        
-            </div>                            
-        </div>                                
+        {{ log_form.as_p }}
+        <button type="submit">Login</button>
     </form>
-    <p><a href="{% url 'reg' %}"><b>Регистрация</b></a></p>
-</div>
+</body>
+</html>
