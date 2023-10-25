@@ -62,6 +62,7 @@ def add_notepage(request):
                 notes.new_note(request.POST['note-text'], request.user)  
                 return HttpResponse("<h3>Заметка добавлена</h3>")
 
+
 def logoutpage(request):
     logout(request)
     return redirect('/login/')            
