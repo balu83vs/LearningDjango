@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Notes</title>
+</head>
+<body>
+    <h1>Notes</h1>
+    {% if notes %}
+    <table>
+        {% for note in notes %}
+            <td>
+                <p>
+                    {{ note.note }}
+                </p>
+            </td>
+        {% endfor %}
+    </table>
+    {% else %}
+        <p>
+            <b>
+                Нет записей
+            </b>
+        </p>
+    {% endif %}    
+<p>
+    <a href="{% url 'add_note' %}">Добавить запись</a>
+</p>    
+</body>
+</html>
