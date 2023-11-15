@@ -44,7 +44,7 @@ def logout_page(request):
     logout(request) 
     return redirect('/log_user/')    
 
-    
+ 
 def notes_page(request):
     current_user = request.session['username']
     id_user = NoteUser.objects.filter(username=current_user).first()
@@ -60,3 +60,21 @@ def add_note(request):
     else:
         note_form = AddNoteForm()
         return render(request, 'new_notes.html', {'note_form': note_form})
+    
+    
+############################################################################
+# представления с использованием rest_frameworks
+#############################################################################
+
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from .serializers import NoteSerialiser
+from .models import Notes
+
+@api_view(['GET'])
+def rest_view_notes(request):
+    current_user = request.session['username']
+    id_user = NoteUser.objects.filter(username=current_user).first()
+    notes = Notes.objects.filter(author=id_user)
+    serializer = NoteSerialiser(notes, many=True)
+    return Response(serializer.data)    

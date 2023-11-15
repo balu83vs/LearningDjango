@@ -12,5 +12,5 @@ class NoteUser(AbstractUser):
 
 class Notes(models.Model):
     note = models.TextField()
-    username = models.ForeignKey(NoteUser, on_delete=models.CASCADE)
-    date = models.DateField(timezone.now())    
+    author = models.ForeignKey(NoteUser, on_delete=models.CASCADE)
+    date = models.DateField(timezone.now())   
