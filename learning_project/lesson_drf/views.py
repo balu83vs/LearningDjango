@@ -4,8 +4,11 @@ from django.contrib.auth import login, logout, authenticate
 
 from .models import Notes, NoteUser
 from .forms import UserRegForm, UserLogForm, AddNoteForm
+from .tasks import logout_tsk
 
 from django.shortcuts import HttpResponse
+
+from django.http import JsonResponse
 
 # Create your views here.
 
@@ -42,7 +45,11 @@ def login_user(request):
 def logout_page(request):
     del request.session['username']
     logout(request) 
-    return redirect('/log_user/')    
+    return redirect('/log_user/')   
+
+def logout_page_in10min(request):
+    logout_tsk.apply_async(args= [request], countdown=20)
+    return HttpResponse("User Logouted") 
 
  
 def notes_page(request):
@@ -78,3 +85,14 @@ def rest_view_notes(request):
     notes = Notes.objects.filter(author=id_user)
     serializer = NoteSerialiser(notes, many=True)
     return Response(serializer.data)    
+
+
+
+#AJAX
+## проверка уникальности имени пользователя в базе  
+def check_username(request):
+    if request.method == 'GET':
+        username = request.GET.get('username')
+        user_exists = NoteUser.objects.filter(username=username).exists()
+        return JsonResponse({'result': user_exists})
+    return JsonResponse({"error": "Only GET method"}, status=405)

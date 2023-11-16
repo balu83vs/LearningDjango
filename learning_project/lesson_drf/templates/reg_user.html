@@ -1,4 +1,48 @@
 <!DOCTYPE html>
+
+<style>
+    .unavailable {
+      border: 2px solid red;
+    }
+    .error-message {
+      color: red;
+      font-size: 12px;
+    }
+</style>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      var usernameInput = $('#username');
+      var form = $('#reg_form');
+
+      usernameInput.on('input', function() {
+        var username = usernameInput.val();
+        $.ajax({
+          url: '/check-username',
+          type: 'GET',
+          data: { username: username },
+          success: function(response) {
+            var usernameError = $('#username-error');
+            if (response.result == false) {
+              usernameError.text('Пользователь с таким логином уже существует');
+              form.addClass('unavailable');
+              usernameInput.attr('disabled', true);
+            } else {
+              usernameError.text('');
+              form.removeClass('unavailable');
+              usernameInput.attr('disabled', false);
+            }
+          }
+        });
+      });
+    });
+  </script>
+
+
+
+
 <html>
 <head>
     <title>Registration</title>

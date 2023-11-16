@@ -16,7 +16,7 @@ urlpatterns = [
     path('add_note', views.add_note, name='add_note'),
     path('add_note/', views.add_note, name='add_note'),
     path('logout', views.logout_page, name='logout'),
-    path('logout/', views.logout_page, name='logout'),
+    path('logout/', views.logout_page_in10min, name='logout_10'),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root = settings.STATIC_ROOT)
