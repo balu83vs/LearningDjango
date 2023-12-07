@@ -22,16 +22,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 
-SECRET_KEY = os.environ.get("SECRET_KEY")
+SECRET_KEY = 'django-insecure-%)s9_h17a(quzi0gg2pno54*s75f$$se7&&mf=!r^eut&*qcl2'#os.environ.get("SECRET_KEY")
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-STATIC_ROOT = '/django_learning/static/'
-MEDIA_ROOT = '/django_learning/media/'
+STATIC_ROOT = '/app/static/'
+MEDIA_ROOT = '/app/media/'
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']#os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ")
+ALLOWED_HOSTS = ["localhost", "127.0.0.1", "[::1]"]#os.environ.get("DJANGO_ALLOWED_HOSTS", "").split(" ")
 
 
 # Application definition
@@ -81,7 +81,6 @@ WSGI_APPLICATION = 'learning.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
-
 """
 DATABASES = {
     'default': {
@@ -93,6 +92,18 @@ DATABASES = {
 
 DATABASES = {
     'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'mydatabase',
+        'USER': 'myuser',
+        'PASSWORD': 'mypassword',
+        'HOST': 'db',
+        'PORT': '3306',
+    }
+}
+
+"""
+DATABASES = {
+    'default': {
         'ENGINE': os.environ.get('DB_ENGINE', 'django.db.backends.sqlite3'),
         'NAME': os.environ.get('DB_NAME', BASE_DIR / 'db.sqlite3'),
         'USER': os.environ.get('DB_USER', 'user'),
@@ -101,7 +112,7 @@ DATABASES = {
         'PORT': os.environ.get('DB_PORT', '3306'),
     }
 }
-
+"""
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
